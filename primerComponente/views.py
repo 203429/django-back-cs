@@ -3,10 +3,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-# importaciones de modelos agregados
+# IMPORTACIONES DE MODELOS AGREGADOS
 from primerComponente.models import primerTabla
 
-# importaciones de serializadores
+# IMPORTACIONES DE SERIALIZADORES
 from primerComponente.serializers import primerTablaSerializer
 
 # Create your views here.
