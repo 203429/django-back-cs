@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'primerComponente',
     'login',
     'register',
+    'loadImage',
 
     # LIBRERIAS AGREGADAS AL PROYECTO
     'rest_framework',
@@ -154,3 +155,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media Info
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'assets')
+MEDIA_URL = '/assets/'
