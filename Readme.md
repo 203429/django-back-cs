@@ -10,8 +10,12 @@ pip install markdown
 ```bash
 pip install django-filter
 ```
-
-## Agregar la libreria a INSTALLED_APPS en settings.
 ```bash
-'rest_framework',
+pip install python-dotenv
+```
+```bash
+pip install psycopg2
+```
+```bash
+pip install Pillow
 ```
