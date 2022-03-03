@@ -18,9 +18,9 @@ class loginAuth(ObtainAuthToken):
         token,create = Token.objects.get_or_create(user=user)
         
         return Response({
-            'token':token.key,
-            'user_id':user.pk,
-            'email':user.email
+            'token' : token.key,
+            'user_id' : user.pk,
+            'username' : user.username,
         })
 
 class MyObtainTokenPairView(TokenObtainPairView):

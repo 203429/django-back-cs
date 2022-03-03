@@ -62,7 +62,7 @@ class imagenViewDetail(APIView):
         if id_response != 0:
             id_response = imageSerializer(id_response)
             return Response(self.response_custom("Success", id_response.data, status=status.HTTP_200_OK))
-        return Response(self.response_custom("Error", "No hay datos", status=status.HTTP_200_OK))
+        return Response(self.response_custom("Error", "No hay datos", status=status.HTTP_400_BAD_REQUEST))
 
     def delete(self, request, pk, format=None):
         id_response = self.get_object(pk)
