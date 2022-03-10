@@ -20,7 +20,6 @@ class loginAuth(ObtainAuthToken):
         return Response({
             'token' : token.key,
             'user_id' : user.pk,
-            'username' : user.username,
         })
 
 class MyObtainTokenPairView(TokenObtainPairView):
