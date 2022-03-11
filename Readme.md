@@ -19,3 +19,6 @@ pip install psycopg2
 ```bash
 pip install Pillow
 ```
+```bash
+pip install django-cors-headers
+```
