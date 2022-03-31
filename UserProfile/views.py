@@ -12,12 +12,12 @@ from rest_framework import exceptions
 import json
 
 # Model imports
-from UserProfile.models import userProfileModel
+from UserProfile.models import user_profile_model
 
 # Serializer imports
-from UserProfile.serializers import userProfileSerializer
+from UserProfile.serializers import user_profile_serializer
 
-class userProfileView(APIView):
+class user_profile_view(APIView):
     def custom_response(self, msg, response, status):
         data ={
             "messages": msg,
@@ -29,13 +29,13 @@ class userProfileView(APIView):
         return response
 
     def post(self, request):
-        serializer = userProfileSerializer(data=request.data)
+        serializer = user_profile_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(self.custom_response("Success", serializer.data, status=status.HTTP_201_CREATED))
         return Response(self.custom_response("Error", serializer.errors, status=status.HTTP_400_BAD_REQUEST))
 
-class userProfileViewDetail(APIView):
+class user_profile_view_detail(APIView):
     def custom_response(self, msg, response, status):
         data ={
             "messages": msg,
@@ -63,35 +63,35 @@ class userProfileViewDetail(APIView):
 
     def get_object(self, pk):
         try:
-            return userProfileModel.objects.get(id_user = pk)
-        except userProfileModel.DoesNotExist:
+            return user_profile_model.objects.get(id_user = pk)
+        except user_profile_model.DoesNotExist:
             return 0
 
     def get(self, request, pk, format=None):
-        userProfile = self.get_object(pk)
-        if userProfile != 0:
-            userProfile = userProfileSerializer(userProfile)
+        user_profile = self.get_object(pk)
+        if user_profile != 0:
+            user_profile = user_profile_serializer(user_profile)
             user = User.objects.filter(id=pk).values()
-            return Response(self.custom_response_get("Success", user, userProfile.data, status=status.HTTP_200_OK))
+            return Response(self.custom_response_get("Success", user, user_profile.data, status=status.HTTP_200_OK))
         return Response(self.custom_response("Error", "Profile not found", status=status.HTTP_400_BAD_REQUEST))
 
     def put(self, request, pk, format=None):
-        userProfile = self.get_object(pk)
-        serializer = userProfileSerializer(userProfile, data=request.data)
+        user_profile = self.get_object(pk)
+        serializer = user_profile_serializer(user_profile, data=request.data)
         if serializer.is_valid():
-            userProfile.url_img.delete(save=True)
+            user_profile.url_img.delete(save=True)
             serializer.save()
             return Response(self.custom_response("Success", serializer.data, status=status.HTTP_200_OK))
         return Response(self.custom_response("Error", serializer.errors, status = status.HTTP_400_BAD_REQUEST))
 
     def delete(self, request, pk, format=None):
-        userProfile = self.get_object(pk)
-        if userProfile != 0:
-            userProfile.url_img.delete(save=True)
+        user_profile = self.get_object(pk)
+        if user_profile != 0:
+            user_profile.url_img.delete(save=True)
             return Response(self.custom_response("Success", "Deleted image", status=status.HTTP_200_OK))
         return Response(self.custom_response("Error", "Imgane not found", status=status.HTTP_400_BAD_REQUEST))
 
-class userProfileViewDetailData(APIView):
+class user_profile_view_detail_data(APIView):
     def custom_response_get(self, msg, user, status):
         data ={
             "message": msg,

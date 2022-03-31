@@ -6,12 +6,12 @@ from rest_framework import status
 from rest_framework import exceptions
 import os.path, json
 
-from loadImage.serializers import imageSerializer
+from loadImage.serializers import image_serializer
 
-from loadImage.models import imageModel
+from loadImage.models import image_model
 
 # Create your views here.
-class imageView(APIView):
+class image_view(APIView):
     def response_custom(self, msg, response, status):
         data ={
             "messages": msg,
@@ -19,8 +19,8 @@ class imageView(APIView):
             "status": status,
         }
         res= json.dumps(data)
-        responseOk = json.loads(res)
-        return responseOk
+        response_ok = json.loads(res)
+        return response_ok
 
     def post(self, request):
         if 'url_img' not in request.data:
@@ -29,18 +29,18 @@ class imageView(APIView):
         nombre, formato = os.path.splitext(archivo.name)
         request.data['name_img'] = nombre
         request.data['format_img'] = formato
-        serializer = imageSerializer(data=request.data)
+        serializer = image_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(self.response_custom("Success",serializer.data, status=status.HTTP_201_CREATED))
         return Response(self.response_custom("Error",serializer.errors, status=status.HTTP_400_BAD_REQUEST))
 
     def get(self, request, format=None):
-        queryset = imageModel.objects.all()
-        serializer = imageSerializer(queryset , many=True, context={'request':request})
+        queryset = image_model.objects.all()
+        serializer = image_serializer(queryset , many=True, context={'request':request})
         return Response(self.response_custom("Success", serializer.data, status=status.HTTP_200_OK))
 
-class imagenViewDetail(APIView):
+class image_view_detail(APIView):
     def response_custom(self, msg, response, status):
         data ={
             "messages": msg,
@@ -48,19 +48,19 @@ class imagenViewDetail(APIView):
             "status": status,
         }
         res= json.dumps(data)
-        responseOk = json.loads(res)
-        return responseOk
+        response_ok = json.loads(res)
+        return response_ok
 
     def get_object(self, pk):
         try:
-            return imageModel.objects.get(pk = pk)
-        except imageModel.DoesNotExist:
+            return image_model.objects.get(pk = pk)
+        except image_model.DoesNotExist:
             return 0
 
     def get(self, request, pk, format=None):
         id_response = self.get_object(pk)
         if id_response != 0:
-            id_response = imageSerializer(id_response)
+            id_response = image_serializer(id_response)
             return Response(self.response_custom("Success", id_response.data, status=status.HTTP_200_OK))
         return Response(self.response_custom("Error", "No hay datos", status=status.HTTP_400_BAD_REQUEST))
 
@@ -78,7 +78,7 @@ class imagenViewDetail(APIView):
         nombre, formato = os.path.splitext(archivo.name)
         request.data['name_img'] = nombre
         request.data['format_img'] = formato
-        serializer = imageSerializer(id_response, data = request.data)
+        serializer = image_serializer(id_response, data = request.data)
         if serializer.is_valid():
             id_response.url_img.delete(save=True)
             serializer.save()
